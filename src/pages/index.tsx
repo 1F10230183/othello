@@ -14,13 +14,24 @@ const Home = () => {
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
   ]);
+  const numList = [
+    [1, 0],
+    [-1, 0],
+    [1, 0],
+    [-1, 0],
+    [-1, -1],
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+  ];
   const clickCell = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = JSON.parse(JSON.stringify(board));
-    if (board[y + 1] !== undefined && board[y + 1][x] !== 0 && board[y + 1][x] !== turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
-    }
+    for (const n of numList)
+      if (board[y + n[0]] !== undefined && board[y + n[0]][x + n[1]] === 3 - turnColor) {
+        newBoard[y][x] = turnColor;
+        setTurnColor(3 - turnColor);
+      }
 
     setBoard(newBoard);
   };
