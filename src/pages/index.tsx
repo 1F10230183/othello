@@ -29,34 +29,30 @@ const Home = () => {
     console.log(x, y);
     const newBoard = JSON.parse(JSON.stringify(board));
     const changeStonesList = [];
+    let setStones = false;
     for (const n of directionList) {
       console.log(n);
       for (let space = 1; space < 8; space += 1) {
-        console.log(space);
-        console.table(changeStonesList);
-        console.log(turnColor === 1 ? 'kuro' : 'shiro');
-        console.table(newBoard);
         if (board[y + n[0] * space] === undefined || board[x + n[1] * space] === undefined) {
-          console.log('a');
           break;
         } else if (board[y + n[0] * space][x + n[1] * space] === 0) {
-          console.log('b');
           break;
         } else if (board[y + n[0] * space][x + n[1] * space] === 3 - turnColor) {
-          console.log('c');
           changeStonesList.push([y + n[0] * space, x + n[1] * space]);
         } else if (space >= 2 && board[y + n[0] * space][x + n[1] * space] === turnColor) {
-          console.log('d');
           for (const m of changeStonesList) {
             newBoard[m[0]][m[1]] = turnColor;
           }
           newBoard[y][x] = turnColor;
+          setStones = true;
           break;
         }
       }
     }
-    setTurnColor(3 - turnColor);
-    setBoard(newBoard);
+    if (setStones) {
+      setTurnColor(3 - turnColor);
+      setBoard(newBoard);
+    }
   };
   return (
     <div className={styles.container}>
