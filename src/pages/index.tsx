@@ -20,40 +20,47 @@ const Home = () => {
     [0, 1],
     [0, -1],
     [-1, -1],
-    [1, 1],
     [1, -1],
     [-1, 1],
+    [1, 1],
   ];
 
   const clickCell = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = JSON.parse(JSON.stringify(board));
-    const changeStonesList = [];
+    const CS = [];
     let setStones = false;
     for (const n of directionList) {
       console.log(n);
-      for (let space = 1; space < 8; space += 1) {
+
+      for (let space = 1; space <= 7; space += 1) {
         if (board[y + n[0] * space] === undefined || board[x + n[1] * space] === undefined) {
           break;
         } else if (board[y + n[0] * space][x + n[1] * space] === 0) {
           break;
         } else if (board[y + n[0] * space][x + n[1] * space] === 3 - turnColor) {
-          changeStonesList.push([y + n[0] * space, x + n[1] * space]);
-        } else if (space >= 2 && board[y + n[0] * space][x + n[1] * space] === turnColor) {
-          for (const m of changeStonesList) {
+          CS.push([y + n[0] * space, x + n[1] * space]);
+          continue;
+        } else if (board[y + n[0] * space][x + n[1] * space] === turnColor) {
+          for (const m of CS) {
             newBoard[m[0]][m[1]] = turnColor;
+            newBoard[y][x] = turnColor;
+            console.log('a');
+            setStones = true;
           }
-          newBoard[y][x] = turnColor;
-          setStones = true;
+
           break;
         }
+        console.table(board);
       }
+      CS.splice(0);
     }
     if (setStones) {
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
