@@ -30,6 +30,7 @@ const Home = () => {
     const newBoard = JSON.parse(JSON.stringify(board));
     const CS = [];
     let setStones = false;
+    if (board[y][x] !== 0) return;
     for (const n of directionList) {
       console.log(n);
 
