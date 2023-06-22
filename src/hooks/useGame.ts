@@ -59,6 +59,7 @@ export const useGame=()=>{
       setTurnColor(3 - turnColor);
       setBoard(newBoard);
     }
+    //
   };
   return{board,clickCell}
 }
